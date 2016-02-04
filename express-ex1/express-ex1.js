@@ -28,6 +28,12 @@ app.get("/help", function(req, res) {
   res.sendFile(process.cwd() + "/help.html");
 });
 
+// You could dry up the code with the following but if a user goes to a url that doesn't exist it will give you an error
+// app.get('/*', function(req, res) {
+//   var userURL = req.url;
+//   res.sendFile(process.cwd() + "/" + userURL + ".html");
+// })
+
 app.post("/login", function(req, res) {
   console.log(req.body);
   var myHTML = "<h1>Email: " + req.body.email + "</h1>";
