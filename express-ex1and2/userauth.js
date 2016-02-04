@@ -92,11 +92,12 @@ res.sendFile(process.cwd() + "/login.html");
 
 app.post('/login', function(req,res){
  console.log(req.body);
- if(req.body.Email === "me@me.com" && req.body.Password === "guest"){
+ if(req.body.email === "me@me.com" && req.body.password === "guest"){
    req.session.authenticated = true;
+   req.session.cookie.maxAge*=req.body.sessionTime;
    res.redirect("/account");
  }
- else{
+ else {
    req.session.authenticated = false;
    res.redirect("/help");
  }
@@ -104,12 +105,15 @@ app.post('/login', function(req,res){
 });
 
 app.get('/account', middleware, function(req,res){
- res.end('<h1>'+"Account!!"+'</h1>');
+ res.sendFile(process.cwd() + "/account.html");
 });
 
 app.get('/', function(req, res){
  res.sendFile(process.cwd() + "/home.html");
+});
 
+app.get("/help", function(req, res) {
+  res.sendFile(process.cwd() + "/help.html");
 });
 
 app.listen(PORT,function(){
